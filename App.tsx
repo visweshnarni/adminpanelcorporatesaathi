@@ -15,6 +15,7 @@ import PayrollView from './components/payroll/PayrollView';
 import ReportsView from './components/reports/ReportsView';
 import AuditLogView from './components/audit/AuditLogView';
 import SettingsView from './components/settings/SettingsView';
+import { LeaveManagementView } from './components/leave';
 
 
 export type ViewType = 'dashboard' | 'projects' | 'services' | 'employees' | 'departments' | 'leave' | 'attendance' | 'performance' | 'notifications' | 'email' | 'leaderboard' | 'payroll' | 'reports' | 'audit' | 'settings';
@@ -62,6 +63,8 @@ const App: React.FC = () => {
         return <EmployeeManagementView searchQuery={searchQuery} />;
       case 'departments':
         return <DepartmentManagementView />;
+      case 'leave':
+        return <LeaveManagementView searchQuery={searchQuery} />;
       case 'attendance':
         return <AttendanceManagementView searchQuery={searchQuery} />;
       case 'performance':

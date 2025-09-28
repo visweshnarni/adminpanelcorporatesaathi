@@ -6,7 +6,7 @@ import ServicesChart from './charts/ServicesChart';
 import DepartmentTasksChart from './charts/DepartmentTasksChart';
 import FinancialsChart from './charts/FinancialsChart';
 import RecentActivity from './RecentActivity';
-import LeaveRequests from './LeaveRequests';
+import { LeaveRequestsWidget } from '../leave';
 import NewClientsChart from './charts/NewClientsChart';
 import QuickAccessPanel from './QuickAccessPanel';
 import AnnouncementsFeed from './AnnouncementsFeed';
@@ -72,7 +72,7 @@ const DashboardView: React.FC<Props> = ({ effectiveTheme, setCurrentView }) => {
               </div>
               <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
                 <h3 className="text-lg font-semibold text-text-primary dark:text-gray-200 mb-4">Employee Leave Requests</h3>
-                <LeaveRequests />
+                <LeaveRequestsWidget />
               </div>
             </div>
           </div>

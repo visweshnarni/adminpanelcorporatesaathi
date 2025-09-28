@@ -1,24 +1,16 @@
-
 import React from 'react';
-
-const leaveData = [
-  { id: 1, name: 'Smita Sharma', dates: 'Oct 25 - Oct 27', status: 'Pending', avatar: 'https://picsum.photos/seed/6/40/40' },
-  { id: 2, name: 'Raj Sharma', dates: 'Nov 1 - Nov 5', status: 'Approved', avatar: 'https://picsum.photos/seed/7/40/40' },
-  { id: 3, name: 'Rishabh Patle', dates: 'Nov 10 - Nov 10', status: 'Pending', avatar: 'https://picsum.photos/seed/8/40/40' },
-  { id: 4, name: 'Aayush Sharma', dates: 'Nov 15 - Nov 17', status: 'Pending', avatar: 'https://picsum.photos/seed/9/40/40' },
-  { id: 5, name: 'Priyanka Patil', dates: 'Dec 1 - Dec 3', status: 'Approved', avatar: 'https://picsum.photos/seed/10/40/40' },
-];
+import { dashboardLeaveData } from './data';
 
 const statusStyles = {
   Pending: 'bg-yellow-100 text-yellow-800',
   Approved: 'bg-green-100 text-green-800',
 };
 
-const LeaveRequests: React.FC = () => {
+const LeaveRequestsWidget: React.FC = () => {
   return (
     <div className="flow-root">
       <ul role="list" className="divide-y divide-gray-200">
-        {leaveData.map((request) => (
+        {dashboardLeaveData.map((request) => (
           <li key={request.id} className="py-4">
             <div className="flex items-center space-x-4">
               <div className="flex-shrink-0">
@@ -45,4 +37,4 @@ const LeaveRequests: React.FC = () => {
   );
 };
 
-export default LeaveRequests;
+export default LeaveRequestsWidget;
