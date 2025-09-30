@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const activities = [
@@ -47,24 +46,24 @@ const RecentActivity: React.FC = () => {
           <li key={activity.id}>
             <div className="relative pb-8">
               {activityIdx !== activities.length - 1 ? (
-                <span className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true" />
+                <span className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200 dark:bg-gray-700" aria-hidden="true" />
               ) : null}
               <div className="relative flex space-x-3">
                 <div>
-                  <span className="h-8 w-8 rounded-full flex items-center justify-center ring-4 ring-white">
+                  <span className="h-8 w-8 rounded-full flex items-center justify-center ring-4 ring-white dark:ring-gray-800">
                     <img className="h-8 w-8 rounded-full" src={activity.avatar} alt="" />
                   </span>
                 </div>
                 <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                   <div>
-                    <p className="text-sm text-gray-700">
-                      <a href="#" className="font-medium text-gray-900">
+                    <p className="text-sm text-gray-700 dark:text-gray-300">
+                      <a href="#" className="font-medium text-gray-900 dark:text-white">
                         {activity.user}
                       </a>{' '}
                       {activity.action}
                     </p>
                   </div>
-                  <div className="text-right text-sm whitespace-nowrap text-gray-500">
+                  <div className="text-right text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">
                     <time>{activity.time}</time>
                   </div>
                 </div>

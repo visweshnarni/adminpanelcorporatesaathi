@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { mockAnnouncements } from '../announcements/data';
 import { MegaphoneIcon, ArrowRightIcon } from '../icons/Icons';
@@ -19,10 +18,10 @@ const AnnouncementsFeed: React.FC = () => {
             </div>
           </div>
           <div>
-            <p className={`text-sm font-semibold ${announcement.priority === 'Urgent' ? 'text-red-700' : 'text-text-primary'}`}>
+            <p className={`text-sm font-semibold ${announcement.priority === 'Urgent' ? 'text-red-700 dark:text-red-400' : 'text-text-primary dark:text-gray-200'}`}>
                 {announcement.title}
             </p>
-            <p className="text-xs text-text-secondary">
+            <p className="text-xs text-text-secondary dark:text-gray-400">
                 {new Date(announcement.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
             </p>
           </div>
