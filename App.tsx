@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import MainLayout from './components/layout/MainLayout';
 import DashboardView from './components/dashboard/DashboardView';
@@ -63,8 +62,6 @@ const App: React.FC = () => {
         return <EmployeeManagementView searchQuery={searchQuery} />;
       case 'departments':
         return <DepartmentManagementView />;
-      case 'leave':
-        return <LeaveManagementView searchQuery={searchQuery} />;
       case 'attendance':
         return <AttendanceManagementView searchQuery={searchQuery} />;
       case 'performance':
@@ -81,6 +78,8 @@ const App: React.FC = () => {
         return <ReportsView />;
       case 'audit':
         return <AuditLogView searchQuery={searchQuery}/>;
+      case 'leave':
+        return <LeaveManagementView searchQuery={searchQuery} />;
       case 'settings':
         return <SettingsView />;
       default:
@@ -89,7 +88,6 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100 dark:bg-gray-900 text-text-primary dark:text-gray-200">
       <MainLayout 
         currentView={currentView} 
         setCurrentView={setCurrentView}
@@ -100,7 +98,6 @@ const App: React.FC = () => {
       >
         {renderView()}
       </MainLayout>
-    </div>
   );
 };
 
