@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { ViewType } from '../../App';
-import { DashboardIcon, ProjectIcon, ServiceIcon, EmployeeIcon, DepartmentIcon, LeaveIcon, AttendanceIcon, PerformanceIcon, NotificationIcon, EmailIcon, LeaderboardIcon, PayrollIcon, ReportIcon, AuditIcon, SettingsIcon, XIcon } from '../icons/Icons';
+import { DashboardIcon, ProjectIcon, ServiceIcon, EmployeeIcon, ClientIcon, DepartmentIcon, LeaveIcon, AttendanceIcon, PerformanceIcon, NotificationIcon, EmailIcon, LeaderboardIcon, PayrollIcon, ReportIcon, AuditIcon, SettingsIcon, XIcon } from '../icons/Icons';
 
 interface SidebarProps {
   currentView: ViewType;
@@ -16,6 +16,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, isOpen, 
     { id: 'projects', label: 'Projects', icon: <ProjectIcon /> },
     { id: 'services', label: 'Services', icon: <ServiceIcon /> },
     { id: 'employees', label: 'Employees', icon: <EmployeeIcon /> },
+    { id: 'clients', label: 'Clients', icon: <ClientIcon /> },
     { id: 'departments', label: 'Departments', icon: <DepartmentIcon /> },
     { id: 'leave', label: 'Leave', icon: <LeaveIcon /> },
     { id: 'attendance', label: 'Attendance', icon: <AttendanceIcon /> },
@@ -31,8 +32,8 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, isOpen, 
     { id: 'audit', label: 'Audit Logs', icon: <AuditIcon /> },
   ];
 
-  const NavLink = ({ id, label, icon }: { id: ViewType, label: string, icon: React.ReactElement }) => (
-    <li>
+  const NavLink = ({ id, label, icon, navKey }: { id: ViewType, label: string, icon: React.ReactElement, navKey: string }) => (
+    <li key={navKey}>
       <a
         href="#"
         onClick={(e) => { 
@@ -73,11 +74,11 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, isOpen, 
         <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
           <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Core</p>
           <ul className="space-y-2">
-            {menuItems.map(item => <NavLink key={item.id} id={item.id as ViewType} label={item.label} icon={item.icon} />)}
+            {menuItems.map(item => <NavLink navKey={item.id} id={item.id as ViewType} label={item.label} icon={item.icon} />)}
           </ul>
           <p className="px-3 pt-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Modules</p>
           <ul className="space-y-2">
-            {additionalModules.map(item => <NavLink key={item.id} id={item.id as ViewType} label={item.label} icon={item.icon} />)}
+            {additionalModules.map(item => <NavLink navKey={item.id} id={item.id as ViewType} label={item.label} icon={item.icon} />)}
           </ul>
         </nav>
         <div className="p-4 border-t border-gray-700">

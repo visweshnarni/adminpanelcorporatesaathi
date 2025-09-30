@@ -12,6 +12,7 @@ const viewTitles: Record<ViewType, string> = {
   projects: 'Projects',
   services: 'Services',
   employees: 'Employees',
+  clients: 'Client Management',
   departments: 'Departments',
   leave: 'Leave',
   attendance: 'Attendance',
