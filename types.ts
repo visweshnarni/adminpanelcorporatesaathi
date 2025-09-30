@@ -159,3 +159,24 @@ export interface DepartmentInfo {
   managerId: number | null;
   description: string;
 }
+
+
+export interface Client {
+  id: string;
+  name: string;
+  organization: string;
+  email: string;
+  phone: string;
+  firstSeen: string; // YYYY-MM-DD
+  status: 'Active' | 'Inactive';
+}
+
+export interface ClientDocument {
+    id: string;
+    clientId: string;
+    name: string;
+    type: 'Contract' | 'ID Proof' | 'Service Agreement';
+    url: string;
+    size: string;
+    uploadDate: string;
+}

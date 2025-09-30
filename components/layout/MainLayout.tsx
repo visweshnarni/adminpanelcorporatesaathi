@@ -18,7 +18,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, currentView, setCurre
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-screen w-full bg-background dark:bg-gray-900">
+    <div className="flex h-screen w-full bg-background dark:bg-gray-900 text-text-primary dark:text-gray-200">
       <Sidebar 
         currentView={currentView} 
         setCurrentView={setCurrentView} 

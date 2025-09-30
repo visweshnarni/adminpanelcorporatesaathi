@@ -13,7 +13,7 @@ export const mockAnnouncements: Announcement[] = [
     authorAvatar: 'https://picsum.photos/seed/it-dept/100/100',
     date: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString(),
     audience: 'Company-Wide',
-    priority: 'Urgent',
+    priority: 'Urgent', 
   },
   {
     id: 'anno-2',
@@ -49,3 +49,4 @@ export const mockAnnouncements: Announcement[] = [
     priority: 'Normal',
   }
 ];
+
