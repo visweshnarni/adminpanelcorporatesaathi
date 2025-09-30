@@ -180,3 +180,11 @@ export interface ClientDocument {
     size: string;
     uploadDate: string;
 }
+export interface ServiceDocument {
+    id: string;
+    name: string;
+    type: 'Invoice' | 'Contract' | 'Client Brief' | 'Report';
+    url: string;
+    size: string;
+    uploadDate: string;
+}

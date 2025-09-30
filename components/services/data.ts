@@ -1,4 +1,5 @@
-import { Service } from '../../types';
+
+import { Service, ServiceDocument } from '../../types';
 
 export const mockServices: Service[] = [
   {
@@ -104,3 +105,31 @@ export const mockServices: Service[] = [
     startDate: '2024-07-01',
   }
 ];
+
+export const mockServiceDocuments: Record<string, ServiceDocument[]> = {
+  'gst-001': [
+    { id: 'sdoc1-1', name: 'GST_Application.pdf', type: 'Client Brief', url: '#', size: '300 KB', uploadDate: '2024-07-15' },
+    { id: 'sdoc1-2', name: 'PAN_Card.pdf', type: 'Client Brief', url: '#', size: '1.1 MB', uploadDate: '2024-07-15' },
+    { id: 'sdoc1-3', name: 'Address_Proof.pdf', type: 'Client Brief', url: '#', size: '900 KB', uploadDate: '2024-07-16' },
+  ],
+  'tax-001': [
+    { id: 'sdoc2-1', name: 'Form_16.pdf', type: 'Client Brief', url: '#', size: '450 KB', uploadDate: '2024-06-20' },
+    { id: 'sdoc2-2', name: 'Bank_Statement_Mar.pdf', type: 'Client Brief', url: '#', size: '2.5 MB', uploadDate: '2024-06-21' },
+    { id: 'sdoc2-3', name: 'Investment_Proofs.zip', type: 'Client Brief', url: '#', size: '5.2 MB', uploadDate: '2024-06-22' },
+    { id: 'sdoc2-4', name: 'Tax_Computation.xlsx', type: 'Report', url: '#', size: '150 KB', uploadDate: '2024-07-10' },
+    { id: 'sdoc2-5', name: 'Acknowledgement.pdf', type: 'Report', url: '#', size: '120 KB', uploadDate: '2024-07-12' },
+  ],
+  'startup-001': [
+    { id: 'sdoc3-1', name: 'Director_KYC.zip', type: 'Client Brief', url: '#', size: '3.1 MB', uploadDate: '2024-07-18' },
+  ],
+  'legal-001': [
+    { id: 'sdoc4-1', name: 'Vendor_Agreement_Draft.docx', type: 'Contract', url: '#', size: '88 KB', uploadDate: '2024-07-10' },
+    { id: 'sdoc4-2', name: 'Procurement_Policy.pdf', type: 'Client Brief', url: '#', size: '400 KB', uploadDate: '2024-07-11' },
+  ],
+  'gst-002': [
+    { id: 'sdoc5-1', name: 'Sales_Ledger_Q2.csv', type: 'Client Brief', url: '#', size: '1.8 MB', uploadDate: '2024-07-01' },
+    { id: 'sdoc5-2', name: 'Purchase_Ledger_Q2.csv', type: 'Client Brief', url: '#', size: '950 KB', uploadDate: '2024-07-01' },
+    { id: 'sdoc5-3', name: 'Expense_Invoices.zip', type: 'Invoice', url: '#', size: '10.5 MB', uploadDate: '2024-07-02' },
+    { id: 'sdoc5-4', name: 'Previous_GSTR1.pdf', type: 'Report', url: '#', size: '220 KB', uploadDate: '2024-07-03' },
+  ],
+};

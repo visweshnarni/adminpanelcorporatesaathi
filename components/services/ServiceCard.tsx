@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Service, Employee } from '../../types';
 // FIX: Imported UsersIcon to be used in the component.
@@ -8,6 +9,7 @@ interface Props {
   employees: Employee[];
   onEdit: () => void;
   onDelete: () => void;
+  onViewDocuments: () => void;
 }
 
 const statusStyles = {
@@ -25,7 +27,7 @@ const categoryConfig: Record<Service['category'], { icon: React.ReactElement, co
     'Audit': { icon: <AuditIcon />, color: 'text-indigo-600', bg: 'bg-indigo-100' },
 };
 
-const ServiceCard: React.FC<Props> = ({ service, employees, onEdit, onDelete }) => {
+const ServiceCard: React.FC<Props> = ({ service, employees, onEdit, onDelete, onViewDocuments }) => {
   const assigned = employees.filter(emp => service.assignedEmployeeIds.includes(emp.id));
   const { bg: statusBg, text: statusText } = statusStyles[service.status];
   const { icon, color, bg } = categoryConfig[service.category];
@@ -63,7 +65,9 @@ const ServiceCard: React.FC<Props> = ({ service, employees, onEdit, onDelete }) 
             </div>
             <div className="flex items-center gap-2 truncate">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                <span className="truncate">{service.documents} Document(s)</span>
+                 <button onClick={onViewDocuments} disabled={service.documents === 0} className="truncate hover:underline disabled:no-underline disabled:cursor-not-allowed disabled:text-text-secondary dark:disabled:text-gray-400">
+                    {service.documents} Document(s)
+                 </button>
             </div>
         </div>
 

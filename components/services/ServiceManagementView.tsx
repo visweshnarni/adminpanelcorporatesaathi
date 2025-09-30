@@ -1,8 +1,9 @@
+
 import React, { useState, useMemo } from 'react';
-import { Service, Employee } from '../../types';
-import { mockServices } from './data';
+import { Service, Employee, ServiceDocument } from '../../types';
+import { mockServices, mockServiceDocuments } from './data';
 import { mockEmployees } from '../projects/data';
-import { PlusIcon, ServiceIcon, GavelIcon, RocketIcon, AuditIcon, ReceiptIcon } from '../icons/Icons';
+import { PlusIcon, ServiceIcon, GavelIcon, RocketIcon, AuditIcon, ReceiptIcon, XIcon, DownloadIcon } from '../icons/Icons';
 import AddEditServiceModal from './AddEditServiceModal';
 import ServiceCard from './ServiceCard';
 import KPICard from '../dashboard/KPICard';
@@ -11,11 +12,63 @@ interface Props {
   searchQuery: string;
 }
 
+const ServiceDocumentsModal: React.FC<{
+  isOpen: boolean;
+  onClose: () => void;
+  service: Service | null;
+}> = ({ isOpen, onClose, service }) => {
+    if (!isOpen || !service) return null;
+    const documents = mockServiceDocuments[service.id] || [];
+
+    return (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4" aria-modal="true" role="dialog">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
+                <div className="flex justify-between items-center p-6 border-b dark:border-gray-700">
+                    <div>
+                        <h2 className="text-xl font-bold text-text-primary dark:text-gray-200">Documents for "{service.title}"</h2>
+                        <p className="text-sm text-text-secondary dark:text-gray-400">{service.clientName}</p>
+                    </div>
+                    <button onClick={onClose} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <XIcon className="w-5 h-5 text-text-secondary dark:text-gray-400" />
+                    </button>
+                </div>
+                <div className="flex-grow overflow-y-auto p-6">
+                    {documents.length > 0 ? (
+                        <ul className="space-y-3">
+                            {documents.map(doc => (
+                                <li key={doc.id} className="flex items-center justify-between bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg">
+                                    <div>
+                                        <p className="font-medium text-text-primary dark:text-gray-200">{doc.name}</p>
+                                        <p className="text-xs text-text-secondary dark:text-gray-400">{doc.type} &bull; {doc.size} &bull; Uploaded {doc.uploadDate}</p>
+                                    </div>
+                                    <a href={doc.url} download className="flex items-center gap-2 px-3 py-1 bg-primary text-white rounded-md text-sm hover:bg-blue-700">
+                                        <DownloadIcon className="w-4 h-4"/> Download
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <div className="text-center py-10">
+                            <p className="text-text-secondary dark:text-gray-400">No documents uploaded for this service.</p>
+                        </div>
+                    )}
+                </div>
+                <div className="flex justify-end items-center p-6 border-t dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 rounded-b-2xl">
+                    <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition">Close</button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
 const ServiceManagementView: React.FC<Props> = ({ searchQuery }) => {
     const [services, setServices] = useState<Service[]>(mockServices);
     const [employees] = useState<Employee[]>(mockEmployees);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [serviceToEdit, setServiceToEdit] = useState<Service | null>(null);
+    const [isDocumentsModalOpen, setIsDocumentsModalOpen] = useState(false);
+    const [selectedServiceForDocs, setSelectedServiceForDocs] = useState<Service | null>(null);
 
     const [filters, setFilters] = useState({
         category: 'all',
@@ -72,6 +125,16 @@ const ServiceManagementView: React.FC<Props> = ({ searchQuery }) => {
         if(window.confirm('Are you sure you want to delete this service request?')) {
             setServices(services.filter(s => s.id !== serviceId));
         }
+    };
+    
+    const handleOpenDocumentsModal = (service: Service) => {
+        setSelectedServiceForDocs(service);
+        setIsDocumentsModalOpen(true);
+    };
+
+    const handleCloseDocumentsModal = () => {
+        setIsDocumentsModalOpen(false);
+        setSelectedServiceForDocs(null);
     };
 
     return (
@@ -135,6 +198,7 @@ const ServiceManagementView: React.FC<Props> = ({ searchQuery }) => {
                             employees={employees} 
                             onEdit={() => handleOpenModal(service)}
                             onDelete={() => handleDeleteService(service.id)}
+                            onViewDocuments={() => handleOpenDocumentsModal(service)}
                         />
                     ))
                 ) : (
@@ -154,6 +218,12 @@ const ServiceManagementView: React.FC<Props> = ({ searchQuery }) => {
                     employees={employees}
                 />
             )}
+
+            <ServiceDocumentsModal
+                isOpen={isDocumentsModalOpen}
+                onClose={handleCloseDocumentsModal}
+                service={selectedServiceForDocs}
+            />
         </div>
     );
 };
