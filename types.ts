@@ -134,6 +134,15 @@ export interface PayrollRecord {
     netSalary: number;
     status: 'Paid' | 'Pending';
 }
+export interface ManualPayment {
+    id: string;
+    employeeId: number;
+    amount: number;
+    date: string; // YYYY-MM-DD
+    type: 'Bonus' | 'Reimbursement' | 'Advance' | 'Other';
+    notes?: string;
+    status: 'Paid' | 'Pending';
+}
 
 export interface AuditLog {
     id: string;
