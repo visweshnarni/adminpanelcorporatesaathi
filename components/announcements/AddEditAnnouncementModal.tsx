@@ -14,6 +14,7 @@ const AddEditAnnouncementModal: React.FC<Props> = ({ isOpen, onClose, onSave }) 
   const [content, setContent] = useState('');
   const [audience, setAudience] = useState<'Company-Wide' | Department>('Company-Wide');
   const [priority, setPriority] = useState<'Normal' | 'Urgent'>('Normal');
+  const [imageUrl, setImageUrl] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,6 +31,7 @@ const AddEditAnnouncementModal: React.FC<Props> = ({ isOpen, onClose, onSave }) 
       authorPosition: 'System Administrator',
       authorAvatar: 'https://picsum.photos/100/100',
       date: new Date().toISOString(),
+      imageUrl: imageUrl || undefined, 
     });
   };
   
@@ -70,6 +72,20 @@ const AddEditAnnouncementModal: React.FC<Props> = ({ isOpen, onClose, onSave }) 
                 placeholder="Write your announcement here..."
               />
             </div>
+
+            {/* NEW INPUT FIELD FOR IMAGE URL */}
+            <div>
+              <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700 mb-1">Image URL (Optional)</label>
+              <input 
+                type="url" 
+                id="imageUrl"
+                value={imageUrl}
+                onChange={e => setImageUrl(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
+                placeholder="e.g., https://example.com/image.jpg"
+              />
+            </div>
+            
              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                  <div>
                     <label htmlFor="audience" className="block text-sm font-medium text-gray-700 mb-1">Audience</label>

@@ -5,7 +5,8 @@ import { mockEmployees } from '../projects/data';
 import PayrollTable from './PayrollTable';
 import SalarySlipModal from './SalarySlipModal';
 import KPICard from '../dashboard/KPICard';
-import { PayrollIcon, ReportIcon } from '../icons/Icons';
+import { PayrollIcon, ReportIcon, PlusIcon } from '../icons/Icons'; // Import PlusIcon
+import PayrollFormModal from './PayrollFormModal'; // Import the new modal
 
 interface Props {
   searchQuery: string;
@@ -16,6 +17,10 @@ const PayrollView: React.FC<Props> = ({ searchQuery }) => {
     const [employees] = useState<Employee[]>(mockEmployees);
     const [selectedSlip, setSelectedSlip] = useState<{ record: PayrollRecord, employee: Employee } | null>(null);
     const [currentMonth, setCurrentMonth] = useState(new Date().toLocaleString('default', { month: 'long', year: 'numeric' }));
+    
+    // New state for Add/Edit Modal
+    const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+    const [recordToEdit, setRecordToEdit] = useState<PayrollRecord | null>(null); // null for Add, record for Edit
     
     const employeeMap = useMemo(() => new Map(employees.map(e => [e.id, e])), [employees]);
 
@@ -47,7 +52,41 @@ const PayrollView: React.FC<Props> = ({ searchQuery }) => {
             }
         }
     };
+    
+    // Handler to open the modal for editing
+    const handleEditRecord = (recordId: string) => {
+        const record = payrollRecords.find(r => r.id === recordId);
+        if (record) {
+            setRecordToEdit(record);
+            setIsFormModalOpen(true);
+        }
+    };
+    
+    // Handler to open the modal for adding a new record
+    const handleAddNewRecord = () => {
+        setRecordToEdit(null); // Set to null to indicate a new record
+        setIsFormModalOpen(true);
+    };
 
+    // Handler for saving/updating the record
+    const handleSavePayrollRecord = (record: PayrollRecord) => {
+        setPayrollRecords(prevRecords => {
+            const existingIndex = prevRecords.findIndex(r => r.id === record.id);
+
+            if (existingIndex !== -1) {
+                // Edit existing record
+                const updatedRecords = [...prevRecords];
+                updatedRecords[existingIndex] = record;
+                alert(`Successfully updated payroll record for ${employeeMap.get(record.employeeId)?.name}.`);
+                return updatedRecords;
+            } else {
+                // Add new record
+                alert(`Successfully added new payroll record for ${employeeMap.get(record.employeeId)?.name} for ${record.month}.`);
+                return [...prevRecords, record];
+            }
+        });
+    };
+    
     const generatePayrollForMonth = (employee: Employee, month: string): PayrollRecord => {
         const basicSalary = 50000 + (employee.id * 1000);
         const allowances = basicSalary * 0.2;
@@ -88,13 +127,26 @@ const PayrollView: React.FC<Props> = ({ searchQuery }) => {
                     <h2 className="text-2xl lg:text-3xl font-bold text-text-primary dark:text-gray-200">Payroll</h2>
                     <p className="text-text-secondary dark:text-gray-400 mt-1">Manage and view employee salary information.</p>
                 </div>
-                <button
-                    onClick={handleGeneratePayroll}
-                    className="flex items-center justify-center gap-2 px-4 py-2 bg-primary text-white rounded-lg shadow-md hover:bg-blue-700 transition-colors"
-                >
-                    <PayrollIcon />
-                    <span>Generate Payroll</span>
-                </button>
+                
+                <div className="flex gap-3">
+                    {/* NEW BUTTON: Add Payroll */}
+                    <button
+                        onClick={handleAddNewRecord}
+                        className="flex items-center justify-center gap-2 px-4 py-2 bg-primary text-white rounded-lg shadow-md hover:bg-green-600 transition-colors"
+                    >
+                        <PlusIcon className="w-5 h-5"/>
+                        <span>Add Payroll</span>
+                    </button>
+
+                    {/* EXISTING BUTTON: Generate Payroll */}
+                    <button
+                        onClick={handleGeneratePayroll}
+                        className="flex items-center justify-center gap-2 px-4 py-2 bg-primary text-white rounded-lg shadow-md hover:bg-blue-700 transition-colors"
+                    >
+                        <PayrollIcon />
+                        <span>Generate Payroll</span>
+                    </button>
+                </div>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -119,6 +171,7 @@ const PayrollView: React.FC<Props> = ({ searchQuery }) => {
                 records={filteredRecords}
                 employees={employees}
                 onViewSlip={handleViewSlip}
+                onEditRecord={handleEditRecord} // <-- Pass the new handler
             />
 
             {selectedSlip && (
@@ -129,6 +182,17 @@ const PayrollView: React.FC<Props> = ({ searchQuery }) => {
                     employee={selectedSlip.employee}
                 />
             )}
+            
+            {/* NEW MODAL INTEGRATION */}
+            <PayrollFormModal 
+                isOpen={isFormModalOpen}
+                onClose={() => setIsFormModalOpen(false)}
+                recordToEdit={recordToEdit}
+                employees={employees}
+                currentMonth={currentMonth}
+                onSave={handleSavePayrollRecord}
+                isNew={!recordToEdit}
+            />
         </div>
     );
 };

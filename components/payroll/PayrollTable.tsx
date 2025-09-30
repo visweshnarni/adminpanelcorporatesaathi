@@ -7,6 +7,7 @@ interface Props {
   records: PayrollRecord[];
   employees: Employee[];
   onViewSlip: (recordId: string) => void;
+  onEditRecord: (recordId: string) => void; 
 }
 
 const statusStyles = {
@@ -14,7 +15,7 @@ const statusStyles = {
     Pending: 'bg-yellow-100 text-yellow-800',
 };
 
-const PayrollTable: React.FC<Props> = ({ records, employees, onViewSlip }) => {
+const PayrollTable: React.FC<Props> = ({ records, employees, onViewSlip, onEditRecord }) => {
   const employeeMap = new Map(employees.map(e => [e.id, e]));
 
   return (
@@ -56,10 +57,18 @@ const PayrollTable: React.FC<Props> = ({ records, employees, onViewSlip }) => {
                                         {record.status}
                                     </span>
                                 </td>
+                                 
                                 <td className="px-6 py-4 text-center">
+                                    <div className="flex items-center justify-center gap-4">
                                     <button onClick={() => onViewSlip(record.id)} className="font-medium text-primary hover:underline flex items-center justify-center gap-1 mx-auto">
                                        <ReportIcon className="w-4 h-4"/> View Slip
                                     </button>
+
+                                     {/* NEW Edit Button */}
+                                    <button onClick={() => onEditRecord(record.id)} className="font-medium text-yellow-600 hover:underline flex items-center justify-center gap-1">
+                                            Edit
+                                    </button>
+                                 </div>
                                 </td>
                             </tr>
                         )
